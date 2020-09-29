@@ -74,12 +74,14 @@ app.post("/login", function(req, res) {
         if(err){console.log(err)
         }else{
             if(foundUser){
-                if(foundUser.password === password){
-                    console.log("existe")
-                    res.render('secrets')
-                }else{
-                    console.log("Senha errada")
-                }
+               bcrypt.compare(password, foundUser.password, function(err, result){
+                   if(result == true){
+                       res.render('secrets')
+                   }
+
+               })     
+
+
             }
         }
     })
